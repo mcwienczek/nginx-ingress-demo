@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hello-world-ingress
+  namespace: hello-world
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: ingress-working.k8s.cwienczek.com
+    http:
+      paths:
+      - path: /[a-z][A-Z]{2}/hello/world/
+        backend:
+          serviceName: hello-world
+          servicePort: 80
+  tls:
+    - secretName: ingress-working-tls
+      hosts:
+        - ingress-working.k8s.cwienczek.com
